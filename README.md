@@ -1,0 +1,1 @@
+# Reading-a-JSON-file-in-Spark-Scala-on-IntelliJ
