@@ -1,0 +1,15 @@
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.{SparkConf, SparkContext}
+
+
+  object jsontry extends App {
+    System.setProperty("hadoop.home.dir", "C:\\xx\\yy\\zz\\Hadoop\\")
+    val conf = new SparkConf().setAppName("Second Application").setMaster("local")
+    val sc = new SparkContext(conf)
+    //val jsonrdd=sc.wholeTextFiles("C:\\Users\\xx\\yy\\reny.json")
+    val sqlcontext =new SQLContext(sc)
+    val namesjson = sqlcontext.read.json("C:\\Users\\kkhede407\\reny.json")
+    namesjson.show()
+
+
+  }
