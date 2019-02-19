@@ -1,0 +1,34 @@
+import org.apache.spark.sql.SQLContext
+import org.apache.spark.sql.functions.explode
+import org.apache.spark.sql.types.IntegerType
+import org.apache.spark.{SparkConf, SparkContext}
+object ReadNJson {
+  System.setProperty("hadoop.home.dir", "C:\\xx\\yy\\zz\\Hadoop\\")
+
+  def main(args : Array[String]): Unit = {
+    var conf = new SparkConf().setAppName("Read JSON File").setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    val sqlContext = new SQLContext(sc)
+    import sqlContext.implicits._
+    import org.apache.spark.sql._
+    val readJSON = sc.wholeTextFiles("C:\\xx\\yy\\zz\\yu.json")
+      .map(x => x._2)
+      .map(data => data.replaceAll("\n", ""))
+
+    val df = sqlContext.read.json(readJSON)
+
+    val df2 = df.withColumn("lang", explode($"lang"))
+      .withColumn("id", $"lang"(0).cast(IntegerType))
+      .withColumn("langs", $"lang"(1))
+      .withColumn("type", $"lang"(2))
+      .drop("lang")
+      .withColumnRenamed("langs", "lang")
+
+    df2.show(false)
+    df2.printSchema
+
+
+
+
+  }
+}
