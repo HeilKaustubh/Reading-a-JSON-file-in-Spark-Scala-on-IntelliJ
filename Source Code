@@ -8,7 +8,7 @@ import org.apache.spark.{SparkConf, SparkContext}
     val sc = new SparkContext(conf)
     //val jsonrdd=sc.wholeTextFiles("C:\\Users\\xx\\yy\\reny.json")
     val sqlcontext =new SQLContext(sc)
-    val namesjson = sqlcontext.read.json("C:\\Users\\kkhede407\\reny.json")
+    val namesjson = sqlcontext.read.json("C:\\Users\\xx\\reny.json")
     namesjson.show()
 
 
